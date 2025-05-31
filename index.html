@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelly Bean Komponentleri</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>Jelly Bean Komponentleri</h1>
+            <div class="header-actions">
+                <div class="theme-switch" id="themeSwitch">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.83 14.37,18.56L12,22Z"/>
+                    </svg>
+                    <span>Dark Mode</span>
+                </div>
+                <div class="bulk-buttons">
+                    <button class="bulk-button" id="bulkAddBtn">
+                        <i class="fas fa-list"></i> Toplu Komponent Ekle
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="search-container">
+            <div class="search-row">
+                <input type="text" id="searchInput" class="search-input" placeholder="Komponent ara...">
+                <div class="nav-buttons">
+                    <button class="nav-button" id="addComponentBtn">
+                        <i class="fas fa-plus"></i> Yeni Komponent Ekle
+                    </button>
+                </div>
+            </div>
+            <div class="category-filters" id="categoryButtons">
+                <!-- Kategori butonları JavaScript ile eklenecek -->
+            </div>
+        </div>
+
+        <div class="components-grid" id="componentsList">
+            <!-- Komponentler JavaScript ile eklenecek -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="componentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Yeni Komponent Ekle</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="componentForm">
+                <div class="form-group">
+                    <label for="name">Komponent Adı:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Tip:</label>
+                    <select id="type" name="type" required>
+                        <option value="">Seçiniz...</option>
+                        <option value="Operasyonel Amplifikatör">Op-Amp</option>
+                        <option value="Zamanlayıcı">Zamanlayıcı</option>
+                        <option value="Voltaj Regülatörü">Regülatör</option>
+                        <option value="NPN Transistör">Transistör</option>
+                        <option value="Diyot">Diyot</option>
+                        <option value="CMOS Sayıcı">Sayıcı</option>
+                        <option value="other">Diğer</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="otherType" style="display: none;">
+                    <label for="otherType">Diğer Tip:</label>
+                    <input type="text" id="otherType" name="otherType">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Açıklama:</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="package">Paket Tipi:</label>
+                    <input type="text" id="package" name="package" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="manufacturer">Üretici:</label>
+                    <input type="text" id="manufacturer" name="manufacturer" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="commonUses">Yaygın Kullanım Alanları:</label>
+                    <input type="text" id="commonUses" name="commonUses" placeholder="Virgülle ayırarak yazın" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="datasheetLink">Datasheet Linki:</label>
+                    <input type="url" id="datasheetLink" name="datasheetLink" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Komponent Ekle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toplu ekleme için modal -->
+    <div id="bulkModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Toplu Komponent Ekle</h2>
+                <button class="close-btn" id="closeBulkModal">&times;</button>
+            </div>
+            <form id="bulkForm">
+                <div class="form-group">
+                    <label for="bulkJson">JSON Formatında Komponent Listesi:</label>
+                    <textarea id="bulkJson" name="bulkJson" rows="10" required placeholder='[
+  {"name": "LM358", "type": "Op-Amp", ...},
+  {"name": "NE555", "type": "Zamanlayıcı", ...}
+]'></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Toplu Ekle</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="designer-credit">
+        Tasarım: <span>OKAN KOÇER</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
